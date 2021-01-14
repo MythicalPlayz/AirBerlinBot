@@ -1,5 +1,5 @@
 const { SSL_OP_EPHEMERAL_RSA } = require('constants');
-const Discord = require('Discord.js')
+const Discord = require('discord.js')
 const fs = require("fs")
 module.exports = {
     name: "development",
