@@ -5,6 +5,9 @@
   "engines": {
     "node": "14.x"
   },
+  "scripts": {
+    "start": "node Main.js"
+  },
   "dependencies": {
 "discord.js":"12.5.1",
 "fs": "0.0.1-security"
