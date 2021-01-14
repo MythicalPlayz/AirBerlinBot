@@ -9,12 +9,12 @@ module.exports = {
         
         
         let embed = new Discord.MessageEmbed()
-            .setAuthor(message.author.tag, message.author.avatarURL())
-    .setDescription(message.content.slice(13))
-    .setTitle('Announcement')
+            embed.setAuthor(message.author.tag, message.author.avatarURL())
+    embed.setDescription(message.content.slice(13))
+    embed.setTitle('Announcement')
     if (messageAttachment) embed.setImage(messageAttachment)
        //.setImage("http://i.imgur.com/p2qNFag.png")
-            .setColor('#ff2b2b');
+           embed.setColor('#ff2b2b');
             let Target = fs.readFileSync("./config/Channels.json")
             Target2 = JSON.parse(Target)
             TargetC = Target2.Announcement
