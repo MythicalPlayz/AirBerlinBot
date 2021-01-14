@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "node Main.js",
-    "build": "worker"
+    "build": "webpack"
   },
   "dependencies": {
 "discord.js":"12.5.1",
