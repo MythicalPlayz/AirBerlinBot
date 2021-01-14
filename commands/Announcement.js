@@ -12,7 +12,7 @@ module.exports = {
             .setAuthor(message.author.tag, message.author.avatarURL())
     .setDescription(message.content.slice(13))
     .setTitle('Announcement')
-       .setImage(`${messageAttachment}`)
+    if (messageAttachment) embed.setImage(messageAttachment)
        //.setImage("http://i.imgur.com/p2qNFag.png")
             .setColor(14680086);
             let Target = fs.readFileSync("./config/Channels.json")
