@@ -9,7 +9,7 @@ module.exports = {
     embed.setDescription("The Server has openned. You may now be able to join. See you there! :wave:")
     embed.setTitle('Flight Started')
             if (messageAttachment) embed.setImage(messageAttachment)
-            embed.setColor(14680086)
+            embed.setColor('#ff2b2b')
             let Target = fs.readFileSync("./config/Channels.json")
             Target2 = JSON.parse(Target)
             TargetC = Target2.Event

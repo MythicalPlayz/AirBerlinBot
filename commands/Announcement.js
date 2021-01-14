@@ -14,7 +14,7 @@ module.exports = {
     .setTitle('Announcement')
     if (messageAttachment) embed.setImage(messageAttachment)
        //.setImage("http://i.imgur.com/p2qNFag.png")
-            .setColor(14680086);
+            .setColor('#ff2b2b');
             let Target = fs.readFileSync("./config/Channels.json")
             Target2 = JSON.parse(Target)
             TargetC = Target2.Announcement

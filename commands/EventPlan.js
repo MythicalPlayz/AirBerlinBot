@@ -9,7 +9,7 @@ module.exports = {
     embed.setDescription(message.content.slice(11))
     embed.setTitle('Flight')
             if (messageAttachment) embed.setImage(messageAttachment)
-            embed.setColor(14680086)
+            embed.setColor('#ff2b2b')
             let Target = fs.readFileSync("./config/Channels.json")
             Target2 = JSON.parse(Target)
             TargetC = Target2.Event

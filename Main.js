@@ -14,14 +14,14 @@ for (const file of commandFiles) {
 function WrongServer(sever) {
   let embed = new Discord.MessageEmbed();
   embed.setTitle('Error')
-  embed.setColor(14680086)
+  embed.setColor("#ff2b2b")
   embed.setDescription(`This command can only work in ${sever} server.`)
   return embed
 }
 function NoPermission() {
   let embed = new Discord.MessageEmbed();
   embed.setTitle('Error')
-  embed.setColor(14680086)
+  embed.setColor("#ff2b2b")
   embed.setDescription(`This bot can only be used be staff`)
   return embed
 }
