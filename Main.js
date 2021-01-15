@@ -106,7 +106,7 @@ client.on("ready", () =>{
   client.user.setPresence({
       status: "online",  //You can show online, idle....
       game: {
-          name: "Flying to Germany||Fleigen nach Deutschland!",  //The message shown
+          name: "Flying to Germany || Fliegen nach Deutschland!",  //The message shown
           type: "LISTENING" //PLAYING: WATCHING: LISTENING: STREAMING:
       }
     
