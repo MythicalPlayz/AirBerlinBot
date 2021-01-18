@@ -2,7 +2,7 @@
 const Discord = require('discord.js')
 const fs = require("fs")
 const client = new Discord.Client()
-let token = "NjQ2MDczNDc5OTEzMDEzMjcy.XdL00Q.Sfa0y0P_JnYhZ0xcF9Qj24fhjm0" //process.env.KEY
+let token =  process.env.KEY
 const prefix = ":"
 client.commands = new Discord.Collection();
 
@@ -68,16 +68,10 @@ client.on('message', async message => {
 //var role2= message.member.guild.roles.cache.find(role => role.name === "Higher Rank");
 //message.member.roles.add(role2);
  //   }
+ 
   if (message.author.bot) {return}
   else {
   if ( message.content.startsWith(prefix)) {
-    //if (message.content === 'shut') { process.exit() ;}
-   
-    /*else {
-    
-    } */
-    
-   // console.log(messageL)
     let PublicServer = fs.readFileSync("./config/PublicServer.txt","utf-8")
     let StaffServer = fs.readFileSync("./config/StaffServer.txt","utf-8")
     let messageL = message.content.toLowerCase()
@@ -108,7 +102,9 @@ client.on('message', async message => {
       else if (messageL.startsWith(`${prefix}verify`)) {
         CommandHandler(message,PublicServer,"verify",false)
         }
-    
+        else if (messageL.startsWith(`${prefix}qa`)) {
+          CommandHandler(message,PublicServer,"qa",true)
+          }
   }
 }
 })
@@ -126,3 +122,8 @@ client.on("ready", () =>{
   client.user.setActivity("Flying to Germany || Fliegen nach Deutschland!");
   
 });
+bot.on('guildMemberAdd', member => {
+  var role = member.guild.roles.find('Unverified', 'Beginner role name'); // Variable to get channel ID
+member.addRole(role);
+  client.commands.get("verifyauto").run(member,client)
+})

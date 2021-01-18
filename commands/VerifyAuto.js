@@ -3,12 +3,12 @@ const fs = require("fs")
 const fetch = require("node-fetch")
 
 module.exports = {
-    name: "verify",
-    run: async (message,client) => {
+    name: "verifyauto",
+    run: async (memb,client) => {
  
     
      
-     fetch(`https://verify.eryn.io/api/user/${message.author.id}`)
+     fetch(`https://verify.eryn.io/api/user/${memb.id}`)
              .then(res => res.json())
              .then(json => {
                 if (json.status === "ok") {
@@ -16,15 +16,15 @@ module.exports = {
   value = json.robloxUsername
   //let member = message.guild.members.cache.get(client.id)
   
-   role = message.member.guild.roles.cache.find(role => role.name === "Verified")
-  message.member.roles.add(role)
-  message.member.setNickname(value,"Verified")
-  var role2 = member.guild.roles.find('Unverified', 'Beginner role name');
-  message.member.roles.remove(role2)
+   role = memb.guild.roles.cache.find(role => role.name === "Verified")
+ memb.roles.add(role)
+  memb.setNickname(value,"Verified")
+  var role2 = memb.guild.roles.find('Unverified', 'Beginner role name');
+  memb.roles.remove(role2)
                 }
                 else {
                     value =  "Not Found";
-                    SendUserVerify(message)
+                    SendUserVerify(memb)
                 }
              })
              
@@ -32,12 +32,12 @@ module.exports = {
     }
 }
  
-function SendUserVerify(message) {
+function SendUserVerify(memb) {
     let embed = new Discord.MessageEmbed()
     embed.setDescription(":exclamation::wave: You must be new! Please go to https://verify.eryn.io/ and follow the instructions on the page in order to get verified.")
     embed.setTitle('Verify')
     embed.setColor('#ff2b2b');
-    message.channel.send(embed)
+    memb.guild.channels.get('764486791318732840').send(embed)
 }
 function sleep(ms) {
     return new Promise((resolve) => {
