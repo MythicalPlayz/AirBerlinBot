@@ -19,7 +19,7 @@ module.exports = {
    role = message.member.guild.roles.cache.find(role => role.name === "Verified")
   message.member.roles.add(role)
   message.member.setNickname(value,"Verified")
-  var role2 = member.guild.roles.find('Unverified', 'Beginner role name');
+  var role2 = message.member.guild.roles.find('Unverified', 'Beginner role name');
   message.member.roles.remove(role2)
                 }
                 else {
