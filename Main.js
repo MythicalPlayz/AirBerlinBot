@@ -74,8 +74,9 @@ client.on('message', async message => {
     //if (message.content === 'shut') { process.exit() ;}
    
     /*else {
-    // 
+    
     } */
+    
    // console.log(messageL)
     let PublicServer = fs.readFileSync("./config/PublicServer.txt","utf-8")
     let StaffServer = fs.readFileSync("./config/StaffServer.txt","utf-8")
