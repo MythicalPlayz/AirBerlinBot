@@ -2,7 +2,7 @@
 const Discord = require('discord.js')
 const fs = require("fs")
 const client = new Discord.Client()
-let token =process.env.KEY
+let token =  process.env.KEY
 const prefix = ":"
 client.commands = new Discord.Collection();
 
@@ -25,13 +25,18 @@ function NoPermission() {
   embed.setDescription(`This bot can only be used be staff`)
   return embed
 }
-function CommandHandler(message,Sever,commandname) {
+function CommandHandler(message,Sever,commandname,StaffOnly) {
   let messageL = message.content.toLowerCase()
-  if (messageL.startsWith(prefix+commandname)) {
-    if (message.guild.id === Sever ) {
+  if (messageL.startsWith(prefix+commandname)) { 
+    if (StaffOnly === true && CheckForStaff(message) !== StaffOnly) {
+      let embed = NoPermission()
+      message.channel.send(embed)
+      return
+    }
+    if (message.guild.id === Sever) {
   client.commands.get(commandname).run(message,client)
   }
-  else {
+  else if (message.guild.id !== Sever) {
     let serverW = ''
 let PublicServer = fs.readFileSync("./config/PublicServer.txt","utf-8")
     if (message.guild.id === PublicServer) {
@@ -43,7 +48,18 @@ let PublicServer = fs.readFileSync("./config/PublicServer.txt","utf-8")
      let embed = WrongServer(serverW)
      message.channel.send(embed)
   }
+  else {
+    message.reply("Ouch! We ran into an issue.")
   }
+  }
+}
+function CheckForStaff(message) {
+   if (message.member.roles.cache.find(r => r.name === "Scripter") || message.member.roles.cache.find(r => r.name === "Higher Ranks")) {
+     return true;
+    }
+    else {
+      return false 
+    }
 }
 client.on('message', async message => {
 //if (message.content.startsWith(':role')) {
@@ -52,51 +68,43 @@ client.on('message', async message => {
 //var role2= message.member.guild.roles.cache.find(role => role.name === "Higher Rank");
 //message.member.roles.add(role2);
  //   }
+ 
   if (message.author.bot) {return}
   else {
   if ( message.content.startsWith(prefix)) {
-    //if (message.content === 'shut') { process.exit() ;}
-    if (message.member.roles.cache.find(r => r.name === "Scripter") || message.member.roles.cache.find(r => r.name === "Higher Ranks")) {
-    }
-    else {
-    //  console.log(message.member.roles.cache.find(r => r.name === "Higher Ranks"))
-      let embed = NoPermission()
-      message.channel.send(embed)
-      return
-    }
-   // console.log(messageL)
     let PublicServer = fs.readFileSync("./config/PublicServer.txt","utf-8")
     let StaffServer = fs.readFileSync("./config/StaffServer.txt","utf-8")
     let messageL = message.content.toLowerCase()
     if (messageL.startsWith(`${prefix}announcement`)) {
-   CommandHandler(message,PublicServer,"announcement")
+   CommandHandler(message,PublicServer,"announcement",true)
     }
     else if (messageL.startsWith(`${prefix}development`)) {
-      CommandHandler(message,PublicServer,"development")
+      CommandHandler(message,PublicServer,"development",true)
     }
     else if (messageL.startsWith(`${prefix}eventplan`)) {
-      CommandHandler(message,PublicServer,"eventplan")
+      CommandHandler(message,PublicServer,"eventplan",true)
     }
     else if (messageL.startsWith(`${prefix}eventstart`)) {
-      CommandHandler(message,PublicServer,"eventstart")
+      CommandHandler(message,PublicServer,"eventstart",true)
     }
     else if (messageL.startsWith(`${prefix}eventend`)) {
-      CommandHandler(message,PublicServer,"eventend")
+      CommandHandler(message,PublicServer,"eventend",true)
     }
     else if (messageL.startsWith(`${prefix}eventcancel`)) {
-      CommandHandler(message,PublicServer,"eventcancel")
+      CommandHandler(message,PublicServer,"eventcancel",true)
     }
     else if (messageL.startsWith(`${prefix}eventstaff`)) {
-      CommandHandler(message,StaffServer,"eventstaff")
+      CommandHandler(message,StaffServer,"eventstaff",true)
     }
     else if (messageL.startsWith(`${prefix}setup`)) {
-      if (message.member.roles.cache.find(r => r.name === "Higher Ranks")|| message.member.roles.cache.find(r => r.name === "Scripter")) {
-      CommandHandler(message,StaffServer,"setup")
+      CommandHandler(message,StaffServer,"setup",true)
       }
-      else {
- return
-      }
-    }
+      else if (messageL.startsWith(`${prefix}verify`)) {
+        CommandHandler(message,PublicServer,"verify",false)
+        }
+        else if (messageL.startsWith(`${prefix}qa`)) {
+          CommandHandler(message,PublicServer,"qa",true)
+          }
   }
 }
 })
@@ -111,6 +119,11 @@ client.on("ready", () =>{
       }
     
   });
-  client.user.setActivity("Flying to Germany||Fleigen nach Deutschland!");
+  client.user.setActivity("Flying to Germany || Fliegen nach Deutschland!");
   
 });
+bot.on('guildMemberAdd', member => {
+  var role = member.guild.roles.find('Unverified', 'Beginner role name'); // Variable to get channel ID
+member.addRole(role);
+  client.commands.get("verifyauto").run(member,client)
+})

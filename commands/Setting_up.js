@@ -48,6 +48,13 @@ data = JSON.stringify(json, null, 2)
   fs.writeFileSync('./config/Channels.json',data)
     message.reply("Success")
     }
+    else if (changer.includes("QA")) {
+      let json = GetotherValues('QA',change)
+      // console.log(json)
+     data = JSON.stringify(json, null, 2)
+       fs.writeFileSync('./config/Channels.json',data)
+         message.reply("Success")
+         }
     else
     {
         message.reply("Error")
@@ -65,7 +72,8 @@ let Target = fs.readFileSync("./config/Channels.json")
         "Announcement": value,
         "Development": Target2.Development,
         "Event": Target2.Event,
-        "StaffEvent": Target2.StaffEvent
+        "StaffEvent": Target2.StaffEvent,
+        "QA": Target2.QA
       }
       return Table
       }
@@ -76,7 +84,8 @@ Table =
         "Announcement": Target2.Announcement,
         "Development":value,
         "Event": Target2.Event,
-        "StaffEvent": Target2.StaffEvent
+        "StaffEvent": Target2.StaffEvent,
+        "QA": Target2.QA
       }
       return Table
     }
@@ -86,7 +95,8 @@ Table =
         "Announcement": Target2.Announcement,
         "Development": Target2.Development,
         "Event": value,
-        "StaffEvent": Target2.StaffEvent
+        "StaffEvent": Target2.StaffEvent,
+        "QA": Target2.QA
       }
       return Table
     }
@@ -96,8 +106,20 @@ Table =
         "Announcement": Target2.Announcement,
         "Development": Target2.Development,
         "Event": Target2.Event,
-        "StaffEvent": value
+        "StaffEvent": value,
+        "QA": Target2.QA
       }
       return Table
     }
+    if (exceptionv === 'QA') {
+      Table =
+            {
+              "Announcement": Target2.Announcement,
+              "Development": Target2.Development,
+              "Event": Target2.Event,
+              "StaffEvent": Target2.StaffEvent,
+              "QA": value
+            }
+            return Table
+          } 
 }
