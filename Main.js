@@ -122,7 +122,7 @@ client.on("ready", () =>{
   client.user.setActivity("Flying to Germany || Fliegen nach Deutschland!");
   
 });
-bot.on('guildMemberAdd', member => {
+client.on('guildMemberAdd', member => {
   var role = member.guild.roles.find('Unverified', 'Beginner role name'); // Variable to get channel ID
 member.addRole(role);
   client.commands.get("verifyauto").run(member,client)
