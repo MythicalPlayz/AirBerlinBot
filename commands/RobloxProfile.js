@@ -3,20 +3,19 @@ const fs = require("fs")
 const fetch = require("node-fetch")
 
 module.exports = {
-    name: "verify",
+    name: "profile",
     run: async (message,client) => {
-   Info = await GetData(message)
-   if (Info.status === "ok") {
-HandleRole(Info.robloxUsername,message)
-   }
- 
-       else {
-           SendUserVerify(message)
-       } 
-    
-     
-    
-}
+        Info = await GetData(message)
+        if (Info.status === "ok") {
+            Groups = await GetGroups(Info.robloxId)
+            GetGroupRank(Groups)
+        }
+      
+            else {
+                SendUserVerify(message)
+            } 
+
+    }
 }
 async function GetData(message) {
     return await  fetch(`https://verify.eryn.io/api/user/${message.author.id}`)
@@ -24,14 +23,6 @@ async function GetData(message) {
 
 
 }
- function HandleRole(user,message) {
-role = message.member.guild.roles.cache.find(role => role.name === "Verified")
-message.member.roles.add(role)
-var role2 = message.member.guild.roles.cache.find(role => role.name === 'Unverified');
-message.member.roles.remove(role2)
-message.member.setNickname(user,"Verified")
-       
- }
 function SendUserVerify(message) {
     let embed = new Discord.MessageEmbed()
     embed.setDescription(":exclamation::wave: You must be new! Please go to https://verify.eryn.io/ and follow the instructions on the page in order to get verified.")
@@ -39,8 +30,13 @@ function SendUserVerify(message) {
     embed.setColor('#ff2b2b');
     message.channel.send(embed)
 }
-function sleep(ms) {
-    return new Promise((resolve) => {
-      setTimeout(resolve, ms);
-    })
+async function GetGroups(userId) {
+    return await fetch(`https://groups.roblox.com//v2/users/${userId}/groups/roles`)
+    .then(res => res.json())
+}
+function GetGroupRank(table) {
+    for (const part of table){
+        console.log(part)
+        //TODO: Fix
+    }
 }

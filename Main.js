@@ -100,6 +100,9 @@ client.on('message', async message => {
         else if (messageL.startsWith(`${prefix}qa`)) {
           CommandHandler(message,PublicServer,"qa",true)
           }
+          else if (messageL.startsWith(`${prefix}profile`)) {
+            CommandHandler(message,PublicServer,"profile",false)
+            } 
   }
 }
 })
