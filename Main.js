@@ -1,8 +1,9 @@
 
 const Discord = require('discord.js')
 const fs = require("fs")
+const { Server } = require('http')
 const client = new Discord.Client()
-let token =  process.env.KEY
+let token = "NjU0Mzk5Mjk5MjkxMDU0MTMx.XfE-1w.FeabsdulXhxA5SY163MafMz3UQM" //process.env.KEY
 const prefix = ":"
 client.commands = new Discord.Collection();
 
@@ -33,12 +34,13 @@ function CommandHandler(message,Sever,commandname,StaffOnly) {
       message.channel.send(embed)
       return
     }
-    if (message.guild.id === Sever) {
+    let PublicServer = fs.readFileSync("./config/PublicServer.txt","utf-8")
+    if (message.guild.id === Sever || Sever === PublicServer) {
   client.commands.get(commandname).run(message,client)
   }
   else if (message.guild.id !== Sever) {
     let serverW = ''
-let PublicServer = fs.readFileSync("./config/PublicServer.txt","utf-8")
+
     if (message.guild.id === PublicServer) {
       serverW = "Staff"
     }
@@ -62,13 +64,6 @@ function CheckForStaff(message) {
     }
 }
 client.on('message', async message => {
-//if (message.content.startsWith(':role')) {
-//var role= message.member.guild.roles.cache.find(role => role.name === "Staff");
-//message.member.roles.add(role);
-//var role2= message.member.guild.roles.cache.find(role => role.name === "Higher Rank");
-//message.member.roles.add(role2);
- //   }
- 
   if (message.author.bot) {return}
   else {
   if ( message.content.startsWith(prefix)) {
@@ -111,19 +106,15 @@ client.on('message', async message => {
 client.login(token)
 client.on("ready", () =>{
   console.log(`Logged in as ${client.user.tag}!`);
-  client.user.setPresence({
-      status: "online",  //You can show online, idle....
-      game: {
-          name: "Flying to Germany || Fliegen nach Deutschland!",  //The message shown
-          type: "LISTENING" //PLAYING: WATCHING: LISTENING: STREAMING:
-      }
-    
-  });
-  client.user.setActivity("Flying to Germany || Fliegen nach Deutschland!");
+  client.user.setActivity("Your Airline");
   
 });
 client.on('guildMemberAdd', member => {
+  try {
   var role = member.guild.roles.find(role => role.name === 'Unverified'); // Variable to get channel ID
 member.addRole(role);
   client.commands.get("verifyauto").run(member,client)
+  }catch {
+    console.log("Could not add role");
+  }
 })
